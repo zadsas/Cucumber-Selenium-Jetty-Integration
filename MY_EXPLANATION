@@ -1,0 +1,15 @@
+Explanation of the profile integration-tests, which runs by default by simply typing 'mvn verify'
+
+1. War packaging triggers War plugin. The plugin builds a .war file which contains basically the jsp. Classes are not included because the plugin expects them under src/main/java. Jetty web server will serve the war
+
+2. During the generate-sources phase, classes and resources under src/it are considered in order to build the project
+
+3. Jetty web server starts during pre-integration-test phase
+
+3. maven-failsafe-plugin plugin executes integration tests during the integration-test phase by searching for classes ending in IT
+
+5. RunCuckesIT is run by the Cucumber runner, which executes the step definitions in LoadPageStepDef. These step definitions use the WebDriver of Selenium in order to query Jetty
+
+6. Jetty web server stops during post-integration-test phase
+
+7. maven-failsafe-plugin plugin verifies integration tests success
